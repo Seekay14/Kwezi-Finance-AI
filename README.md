@@ -1,5 +1,5 @@
 Kwezi Finance: AI-Driven Customer Support & Fraud Triage System
-Module: AI for Business Analysis with Python (Web Development 3.2)
+Module: AI Business Solution for Business Analysis with Python 
 Institution: Vaal University of Technology (VUT)
 Due Date: 02 November 2026
 
@@ -39,5 +39,18 @@ bash
 uvicorn app:app --reload
 Open your browser and go to http://127.0.0.1:8000/docs to test the AI via the interactive Swagger UI.
 
-👥 Group Members
-Manqoba Vakala
+
+Group Members
+
+ Surname	          Student number
+ 
+1 Manqoba Valaka	   223074993 
+
+2	OS Jolaosa       	222310618
+
+3	L Mtshali	        224730967
+
+4	BR Mokhoantle	    223140619
+
+5	CK Kambala       	224139584
+
