@@ -44,7 +44,7 @@ Group Members
 
  Surname	          Student number
  
-1 Manqoba Valaka	   223074993 
+1 Manqoba Vakala	   223074993 
 
 2	OS Jolaosa       	222310618
 
