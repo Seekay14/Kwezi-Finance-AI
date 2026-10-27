@@ -81,4 +81,4 @@ print(classification_report(y_test, y_pred))
 
 # Save the trained pipeline model
 joblib.dump(model_pipeline, 'nlp_triage_model.pkl')
-print("\nSuccess! Model saved as 'nlp_triage_model.pkl'")
+print("\nSuccess! Model saved as 'nlp_triage_model.pkl'") 
