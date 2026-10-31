@@ -1,0 +1,33 @@
+ AI Solution 
+
+The finance industry is one of the key sectors highlighted in the discussion of the 
+Fourth Industrial Revolution (4IR) and artificial intelligence. Modern banks and 
+financial institutions gain a great deal from AI because it automates customer service, 
+reduces costs and improves security.
+
+Kwezi Finance is an AI application that targets retail banks in South Africa. Using 
+Python-based natural language processing (NLP), the application automatically 
+evaluates the enquiries and complaints that customers send through email or chat. It 
+determines the urgency of each message, identifies any reported cases of fraud, and 
+directs the enquiry to the relevant department.
+
+ Problem Definition 
+
+Retail banks in South Africa receive thousands of customer enquiries every day 
+through email, messaging apps and call centres. Conventionally, human operators 
+have to read, categorise and route each enquiry to the appropriate department, such 
+as the Fraud Department, the Billing Department or the General Enquiries 
+Department. This process takes a lot of time, is prone to human error and is very 
+expensive.
+
+Most importantly, a customer who reports a stolen bank card or an unauthorised 
+transaction waits in the same queue as a customer with a simple question about 
+account fees. Delays in identifying and responding to such high-priority issues can 
+cause financial losses for both the customer and the bank.
+How would solving the problem with AI benefit the organisation and the 
+community? The solution is a system that uses NLP to quickly analyse the text of a 
+customer message, determine the main issue and assign a priority to it. If a customer 
+types “unauthorised transaction”, the AI immediately assigns the case to the Fraud 
+Department. This greatly reduces the time taken to respond to urgent financial threats, 
+which saves customers’ money. For the bank, it reduces the human labour spent on 
+sorting messages.
