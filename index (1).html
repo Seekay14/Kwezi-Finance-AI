@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kwezi Finance - AI Support</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f7f6; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .container { width: 100%; max-width: 800px; padding: 20px; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { color: #004d99; font-size: 2.5rem; margin-bottom: 10px; }
+        .header p { color: #666; font-size: 1.1rem; }
+        .card { background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 40px; }
+        label { display: block; font-weight: 600; margin-bottom: 10px; color: #333; }
+        textarea { width: 100%; height: 120px; padding: 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; resize: vertical; transition: border-color 0.3s; }
+        textarea:focus { outline: none; border-color: #004d99; }
+        button { width: 100%; padding: 15px; margin-top: 20px; background-color: #004d99; color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background-color 0.3s; }
+        button:hover { background-color: #003366; }
+        button:disabled { background-color: #99b3cc; cursor: not-allowed; }
+        .results { display: none; margin-top: 30px; padding-top: 30px; border-top: 2px dashed #e0e0e0; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .metric { background: #f8f9fa; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #e0e0e0; }
+        .metric-label { display: block; font-size: 0.85rem; color: #777; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        .metric-value { font-size: 1.2rem; font-weight: bold; color: #004d99; }
+        .priority-HIGH { color: #dc3545; }
+        .priority-MEDIUM { color: #fd7e14; }
+        .priority-LOW { color: #28a745; }
+        .priority-UNKNOWN { color: #6c757d; }
+        .softbot-box { background: #e3f2fd; border-left: 5px solid #004d99; padding: 20px; border-radius: 4px; margin-top: 15px; }
+        .softbot-box h4 { margin-bottom: 8px; color: #004d99; display: flex; align-items: center; gap: 8px; }
+        .softbot-box p { font-style: italic; color: #444; }
+        .loader { display: none; text-align: center; margin-top: 20px; color: #004d99; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>🏦 Kwezi Finance</h1>
+        <p>AI-Driven Customer Support & Fraud Triage System</p>
+    </div>
+
+    <div class="card">
+        <label for="message">Customer Message:</label>
+        <textarea id="message" placeholder="Paste the customer's query here (e.g., 'Someone stole my bank card at the ATM, please block it.')"></textarea>
+        
+        <button id="submitBtn" onclick="classifyMessage()">Analyze & Route Message</button>
+        
+        <div id="loader" class="loader">🔄 AI is analyzing the message...</div>
+
+        <div id="results" class="results">
+            <h3 style="margin-bottom: 15px; color: #333;">AI Analysis Results</h3>
+            
+            <div class="grid">
+                <div class="metric">
+                    <span class="metric-label">Category</span>
+                    <span class="metric-value" id="res-category">-</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Priority</span>
+                    <span class="metric-value" id="res-priority">-</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Confidence</span>
+                    <span class="metric-value" id="res-confidence">-</span>
+                </div>
+            </div>
+
+            <div class="softbot-box">
+                <h4>💬 Softbot Reply</h4>
+                <p id="res-reply">-</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function classifyMessage() {
+        const text = document.getElementById('message').value.trim();
+        if (!text) {
+            alert("Please enter a customer message first.");
+            return;
+        }
+
+        const btn = document.getElementById('submitBtn');
+        const loader = document.getElementById('loader');
+        const results = document.getElementById('results');
+
+        btn.disabled = true;
+        btn.innerText = "Processing...";
+        loader.style.display = 'block';
+        results.style.display = 'none';
+
+        try {
+            // Connect to the FastAPI backend
+            const response = await fetch('/classify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: text })
+            });
+
+            if (!response.ok) throw new Error("Failed to connect to API");
+
+            const data = await response.json();
+
+            // Update the UI with the AI results
+            document.getElementById('res-category').innerText = data.ai_category;
+            
+            const priorityEl = document.getElementById('res-priority');
+            priorityEl.innerText = data.priority_level;
+            
+            // Apply the correct color based on priority
+            const priorityClass = data.priority_level.split(' ')[0];
+            priorityEl.className = `metric-value priority-${priorityClass}`;
+            
+            document.getElementById('res-confidence').innerText = data.confidence_score;
+            document.getElementById('res-reply').innerText = data.softbot_reply;
+
+            results.style.display = 'block';
+
+        } catch (error) {
+            alert("Error: Make sure your Python API (app.py) is running in the terminal!");
+            console.error(error);
+        } finally {
+            btn.disabled = false;
+            btn.innerText = "Analyze & Route Message";
+            loader.style.display = 'none';
+        }
+    }
+</script>
+
+</body>
+</html>
