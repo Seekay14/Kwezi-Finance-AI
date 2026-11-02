@@ -1,4 +1,7 @@
- pandas
+pandas
 scikit-learn
 joblib
 streamlit
+fastapi
+uvicorn
+pydantic
