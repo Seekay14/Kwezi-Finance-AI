@@ -1,134 +1,125 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kwezi Finance - AI Support</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f4f7f6; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .container { width: 100%; max-width: 800px; padding: 20px; }
-        .header { text-align: center; margin-bottom: 30px; }
-        .header h1 { color: #004d99; font-size: 2.5rem; margin-bottom: 10px; }
-        .header p { color: #666; font-size: 1.1rem; }
-        .card { background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 40px; }
-        label { display: block; font-weight: 600; margin-bottom: 10px; color: #333; }
-        textarea { width: 100%; height: 120px; padding: 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; resize: vertical; transition: border-color 0.3s; }
-        textarea:focus { outline: none; border-color: #004d99; }
-        button { width: 100%; padding: 15px; margin-top: 20px; background-color: #004d99; color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background-color 0.3s; }
-        button:hover { background-color: #003366; }
-        button:disabled { background-color: #99b3cc; cursor: not-allowed; }
-        .results { display: none; margin-top: 30px; padding-top: 30px; border-top: 2px dashed #e0e0e0; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .metric { background: #f8f9fa; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #e0e0e0; }
-        .metric-label { display: block; font-size: 0.85rem; color: #777; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-        .metric-value { font-size: 1.2rem; font-weight: bold; color: #004d99; }
-        .priority-HIGH { color: #dc3545; }
-        .priority-MEDIUM { color: #fd7e14; }
-        .priority-LOW { color: #28a745; }
-        .priority-UNKNOWN { color: #6c757d; }
-        .softbot-box { background: #e3f2fd; border-left: 5px solid #004d99; padding: 20px; border-radius: 4px; margin-top: 15px; }
-        .softbot-box h4 { margin-bottom: 8px; color: #004d99; display: flex; align-items: center; gap: 8px; }
-        .softbot-box p { font-style: italic; color: #444; }
-        .loader { display: none; text-align: center; margin-top: 20px; color: #004d99; font-weight: bold; }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kwezi Finance | AI Triage Demo</title>
+  <style>
+    :root { font-family: Arial, Helvetica, sans-serif; color: #193247; background: #f3f6f8; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    header { background: #123552; color: white; padding: 22px 20px; }
+    header .inner, main, footer { width: min(900px, calc(100% - 32px)); margin: auto; }
+    header h1 { margin: 0; font-size: 1.55rem; }
+    header p { margin: 5px 0 0; color: #d5e5ef; }
+    main { padding: 28px 0 40px; }
+    .panel { background: white; border: 1px solid #d8e2e8; border-radius: 10px; padding: 22px; margin-bottom: 18px; }
+    h2 { margin: 0 0 8px; font-size: 1.25rem; }
+    .intro, .note { color: #526b7d; }
+    label { display: block; font-weight: 700; margin: 16px 0 7px; }
+    textarea { width: 100%; min-height: 120px; resize: vertical; padding: 12px; border: 1px solid #a9bac5; border-radius: 6px; font: inherit; }
+    textarea:focus { outline: 3px solid #b9ddf2; border-color: #1e6998; }
+    button { margin-top: 12px; padding: 11px 17px; border: 0; border-radius: 6px; background: #176a91; color: white; font: inherit; font-weight: 700; cursor: pointer; }
+    button:hover { background: #105578; }
+    button:disabled { opacity: .65; cursor: wait; }
+    .result { display: none; }
+    .result dl { display: grid; grid-template-columns: 150px 1fr; gap: 8px 12px; margin: 16px 0; }
+    dt { color: #526b7d; font-weight: 700; }
+    dd { margin: 0; }
+    .reply { background: #edf5f8; border-left: 4px solid #176a91; border-radius: 4px; padding: 12px; }
+    .error { color: #9b2525; font-weight: 700; }
+    .note { margin: 10px 0 0; font-size: .92rem; }
+    footer { padding: 0 0 24px; color: #526b7d; font-size: .9rem; }
+    @media (max-width: 520px) {
+      .panel { padding: 17px; }
+      .result dl { grid-template-columns: 1fr; gap: 2px; }
+      dd { margin-bottom: 8px; }
+    }
+  </style>
 </head>
 <body>
-
-<div class="container">
-    <div class="header">
-        <h1>🏦 Kwezi Finance</h1>
-        <p>AI-Driven Customer Support & Fraud Triage System</p>
+  <header>
+    <div class="inner">
+      <h1>Kwezi Finance</h1>
+      <p>AI-assisted customer query triage · Student prototype</p>
     </div>
+  </header>
 
-    <div class="card">
-        <label for="message">Customer Message:</label>
-        <textarea id="message" placeholder="Paste the customer's query here (e.g., 'Someone stole my bank card at the ATM, please block it.')"></textarea>
-        
-        <button id="submitBtn" onclick="classifyMessage()">Analyze & Route Message</button>
-        
-        <div id="loader" class="loader">🔄 AI is analyzing the message...</div>
+  <main>
+    <section class="panel">
+      <h2>Classify a banking query</h2>
+      <p class="intro">The model suggests a category, priority and support team. This demo does not create a ticket or contact a bank employee.</p>
 
-        <div id="results" class="results">
-            <h3 style="margin-bottom: 15px; color: #333;">AI Analysis Results</h3>
-            
-            <div class="grid">
-                <div class="metric">
-                    <span class="metric-label">Category</span>
-                    <span class="metric-value" id="res-category">-</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Priority</span>
-                    <span class="metric-value" id="res-priority">-</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Confidence</span>
-                    <span class="metric-value" id="res-confidence">-</span>
-                </div>
-            </div>
+      <form id="triage-form">
+        <label for="message">Customer message</label>
+        <textarea id="message" name="message" maxlength="5000" required
+          placeholder="Example: I see a transaction on my account that I did not make."></textarea>
+        <button id="submit" type="submit">Analyse message</button>
+      </form>
+      <p class="note">Use sample text only. Do not enter real names, account numbers, card details, phone numbers or other private information.</p>
+      <p id="error" class="error" role="alert" aria-live="polite"></p>
+    </section>
 
-            <div class="softbot-box">
-                <h4>💬 Softbot Reply</h4>
-                <p id="res-reply">-</p>
-            </div>
-        </div>
-    </div>
-</div>
+    <section id="result" class="panel result" aria-live="polite">
+      <h2>AI result</h2>
+      <dl>
+        <dt>Category</dt><dd id="category"></dd>
+        <dt>Priority</dt><dd id="priority"></dd>
+        <dt>Suggested team</dt><dd id="queue"></dd>
+        <dt>Model score</dt><dd id="confidence"></dd>
+      </dl>
+      <div class="reply"><strong>Sample softbot reply</strong><p id="reply"></p></div>
+    </section>
 
-<script>
-    async function classifyMessage() {
-        const text = document.getElementById('message').value.trim();
-        if (!text) {
-            alert("Please enter a customer message first.");
-            return;
-        }
+    <section class="panel">
+      <h2>About the demo</h2>
+      <p class="intro">The prototype uses TF-IDF text features and a Multinomial Naive Bayes classifier. It has four classes: Fraud, Billing, Account Access and General. Low-scoring predictions are marked for human review.</p>
+      <p class="note">The current dataset is small and English-language. Accuracy, fraud recall, response time, South African slang support and code-switching support must be measured before claiming those targets are met.</p>
+    </section>
+  </main>
 
-        const btn = document.getElementById('submitBtn');
-        const loader = document.getElementById('loader');
-        const results = document.getElementById('results');
+  <footer>Kwezi Finance · Business Analysis 3.2</footer>
 
-        btn.disabled = true;
-        btn.innerText = "Processing...";
-        loader.style.display = 'block';
-        results.style.display = 'none';
+  <script>
+    const form = document.getElementById("triage-form");
+    const button = document.getElementById("submit");
+    const result = document.getElementById("result");
+    const errorBox = document.getElementById("error");
 
-        try {
-            // Connect to the FastAPI backend
-            const response = await fetch('/classify', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text: text })
-            });
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      errorBox.textContent = "";
+      result.style.display = "none";
+      const message = document.getElementById("message").value.trim();
+      if (!message) {
+        errorBox.textContent = "Enter a message to classify.";
+        return;
+      }
 
-            if (!response.ok) throw new Error("Failed to connect to API");
+      button.disabled = true;
+      button.textContent = "Analysing…";
+      try {
+        const response = await fetch("/classify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: message })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.detail || "The classifier returned an error.");
 
-            const data = await response.json();
-
-            // Update the UI with the AI results
-            document.getElementById('res-category').innerText = data.ai_category;
-            
-            const priorityEl = document.getElementById('res-priority');
-            priorityEl.innerText = data.priority_level;
-            
-            // Apply the correct color based on priority
-            const priorityClass = data.priority_level.split(' ')[0];
-            priorityEl.className = `metric-value priority-${priorityClass}`;
-            
-            document.getElementById('res-confidence').innerText = data.confidence_score;
-            document.getElementById('res-reply').innerText = data.softbot_reply;
-
-            results.style.display = 'block';
-
-        } catch (error) {
-            alert("Error: Make sure your Python API (app.py) is running in the terminal!");
-            console.error(error);
-        } finally {
-            btn.disabled = false;
-            btn.innerText = "Analyze & Route Message";
-            loader.style.display = 'none';
-        }
-    }
-</script>
-
+        document.getElementById("category").textContent = data.ai_category;
+        document.getElementById("priority").textContent = data.priority_level;
+        document.getElementById("queue").textContent = data.recommended_queue;
+        document.getElementById("confidence").textContent = data.confidence_score;
+        document.getElementById("reply").textContent = data.softbot_reply;
+        result.style.display = "block";
+      } catch (error) {
+        errorBox.textContent = error.message || "Could not reach the classifier. Start the API and try again.";
+      } finally {
+        button.disabled = false;
+        button.textContent = "Analyse message";
+      }
+    });
+  </script>
 </body>
 </html>
