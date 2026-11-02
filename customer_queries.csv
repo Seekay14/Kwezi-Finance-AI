@@ -1,4 +1,4 @@
- Message,Category
+Message,Category
 I just got an SMS saying R5000 was withdrawn but I didn't do it!,Fraud
 "Someone stole my bank card at the ATM, please block it.",Fraud
 There is a suspicious login attempt on my account from another country.,Fraud
@@ -303,4 +303,5 @@ I would like to know about your savings interest rates for this year.,General
 "Thank you, my query was resolved quickly.",General
 Can you please tell me more about your insurance products?,General
 Do I need to visit a branch to open an account?,General
+
 
