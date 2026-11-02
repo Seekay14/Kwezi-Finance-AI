@@ -69,3 +69,4 @@ def classify(message: CustomerMessage):
         "confidence_score": f"{confidence:.2f}%",
         "softbot_reply": reply,
     }
+
