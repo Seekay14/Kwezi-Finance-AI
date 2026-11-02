@@ -1,26 +1,305 @@
-Message,Category
+ Message,Category
 I just got an SMS saying R5000 was withdrawn but I didn't do it!,Fraud
 "Someone stole my bank card at the ATM, please block it.",Fraud
 There is a suspicious login attempt on my account from another country.,Fraud
-"I lost my phone and my banking app is on it, I need to block my profile.",Fraud
+"Someone is using my identity to open accounts, this is fraud!",Fraud
+"There is an unauthorized debit order on my account, I want it reversed immediately.",Fraud
+"A hacker just changed my banking password, help!",Fraud
+I see a transaction for Uber Eats that I did not make.,Fraud
+I received an OTP I never requested and now money is missing.,Fraud
+"My card was cloned and used overseas, I never left the country.",Fraud
+Someone called pretending to be from the bank and asked for my PIN.,Fraud
+I clicked a link in an SMS and now my account has strange payments.,Fraud
+There are three withdrawals on my statement that I did not authorise.,Fraud
+"I think my account has been hacked, money is leaving without my permission.",Fraud
+"A scammer tricked me into sending R2000, please reverse the payment.",Fraud
+I got an email that looks like it's from the bank asking for my password.,Fraud
+Someone swapped my SIM card and emptied my savings.,Fraud
+My card was skimmed at a petrol station and now there are fake purchases.,Fraud
+"I did not approve this transfer, someone accessed my banking app.",Fraud
+"Please block my card immediately, I think it was stolen.",Fraud
+There is a payment to a person I don't know on my account.,Fraud
+Fraudsters used my details to take out a loan in my name.,Fraud
+"I never made this online purchase, I want to dispute it as fraud.",Fraud
+"Strange logins from a device I don't recognise, please secure my account.",Fraud
+A man at the ATM watched me enter my PIN and took my card.,Fraud
+"I was phished and gave away my banking details, what do I do?",Fraud
+Money was transferred out of my account while I was asleep.,Fraud
+My cellphone was stolen and someone is using my banking app.,Fraud
+I got a notification for a R9000 payment that is not mine.,Fraud
+Someone opened a credit card in my name without my knowledge.,Fraud
+The caller said my account was compromised and asked me to move my money.,Fraud
+"I want to report a scam, I paid for goods that never arrived.",Fraud
+"Unknown debit orders keep appearing on my account, this looks like fraud.",Fraud
+"My PIN was compromised, please stop all transactions on my card.",Fraud
+I lost my wallet with my bank card inside and see transactions after that.,Fraud
+Someone impersonated me and changed my contact details at the bank.,Fraud
+"I suspect identity theft, my ID was used to apply for accounts.",Fraud
+There was a card-not-present transaction I did not do.,Fraud
+A fake bank website took my login details and now my money is gone.,Fraud
+I received a WhatsApp message from a fake consultant and sent them money.,Fraud
+"Report fraud on my account, I see cash withdrawals in a city I have never visited.",Fraud
 Why was I charged a monthly service fee? I thought my account was free.,Billing
 I need a copy of my bank statement for the last 3 months for a loan application.,Billing
 The ATM ate my card and didn't give me my money.,Billing
+Why did the ATM charge me R50 for a withdrawal?,Billing
+My card is declining but I have money in my account.,Billing
+How much does it cost to send money to another bank?,Billing
+"I was charged twice for the same purchase, please refund me.",Billing
+What are the monthly fees on my current account?,Billing
+Why is there an admin fee on my statement this month?,Billing
+I was charged interest on my credit card even though I paid on time.,Billing
+Please explain the charge on my statement called account maintenance.,Billing
+I need a stamped bank statement for my visa application.,Billing
+How much is the fee for an international transfer?,Billing
+My debit order was charged on the wrong date.,Billing
+I want a refund for a service fee that was taken in error.,Billing
+The ATM deducted money but the cash did not come out.,Billing
+Why is my overdraft fee so high this month?,Billing
+Can you send me my proof of payment for last week's transfer?,Billing
+I was billed for a cheque book I never ordered.,Billing
+What does the SMS notification fee on my account cover?,Billing
+My loan instalment is higher than the amount we agreed.,Billing
+I need a settlement letter showing my outstanding balance.,Billing
+Why did I get charged for a cash deposit at the till?,Billing
+I need a breakdown of all the fees charged on my account this year.,Billing
+"The merchant charged me twice but the money only left my account once, why is it pending?",Billing
+"Please reverse the late payment fee, my salary arrived late.",Billing
+What is the cost to replace a lost card?,Billing
+I need my annual tax certificate for interest earned.,Billing
+There is a bank charge on my account that I do not understand.,Billing
+Why was my card fee increased without notice?,Billing
+I paid my credit card but the balance has not updated.,Billing
+Can I get a refund for the premium account fee I did not use?,Billing
+How are the interest rates on my savings account calculated?,Billing
+I need a bank confirmation letter with my account number for my employer.,Billing
+Why did I pay a fee to withdraw cash at another bank's ATM?,Billing
+The cash I deposited is not showing on my statement.,Billing
+My monthly insurance premium was deducted twice.,Billing
+What is the charge for an instant payment?,Billing
+I want to dispute the fee for exceeding my overdraft limit.,Billing
+"Please send me an updated statement, the balance looks wrong.",Billing
 How do I update my cellphone number on the app?,Account Access
 "I am trying to log in but it says my password is incorrect, please help.",Account Access
 My account is locked because I entered the wrong PIN too many times.,Account Access
-What are the trading hours for the branch in Vanderbijlpark?,Account Access
+"Please unblock my internet banking, I am locked out.",Account Access
+How do I get a new SIM card linked to my bank account?,Account Access
+I need to change my daily withdrawal limit.,Account Access
+I forgot my online banking username.,Account Access
+"I cannot log in to the banking app, it keeps saying error.",Account Access
+How do I reset my password for internet banking?,Account Access
+My fingerprint login stopped working on the app.,Account Access
+I got a new phone and need to register the banking app again.,Account Access
+"The app says my profile is blocked, how do I unlock it?",Account Access
+I did not receive my one time PIN to log in.,Account Access
+How can I change my PIN at the ATM?,Account Access
+"I forgot my PIN, how do I get a new one?",Account Access
+My online banking is suspended and I need access to pay rent.,Account Access
+How do I activate my new card?,Account Access
+"Please help me recover my banking profile, I changed my number.",Account Access
+The website keeps logging me out when I try to sign in.,Account Access
+I want to link my account to the banking app.,Account Access
+How do I unlock my card after too many wrong attempts?,Account Access
+"I can't remember my security questions, how do I get back in?",Account Access
+My card expired and I need a replacement to access my account.,Account Access
+How can I update my email address on my profile?,Account Access
+I need to enable my card for overseas use.,Account Access
+"I am unable to register for internet banking, it says invalid details.",Account Access
+"Please reset my app, it is stuck on the login screen.",Account Access
+"My daily transfer limit is too low, how can I increase it?",Account Access
+How do I change the cellphone number that receives my OTPs?,Account Access
+I am locked out of my account after updating the app.,Account Access
+Can you re-activate my dormant account?,Account Access
+My login details are not working on the new version of the app.,Account Access
+How do I add another person to access my business account?,Account Access
+"I need to unblock my card, it was blocked by mistake.",Account Access
+I changed my password but it still says access denied.,Account Access
+How do I set up two step verification on my profile?,Account Access
+"I cannot access my account abroad, how do I allow it?",Account Access
+"The app does not recognise my device, how do I verify it?",Account Access
+"I need to reset my ATM card PIN, I forgot it.",Account Access
+How do I switch on notifications for my account?,Account Access
+What are the trading hours for the branch in Vanderbijlpark?,General
 Can I open a savings account for my child online?,General
 I need to speak to a consultant about a home loan.,General
-"There is an unauthorized debit order on my account, I want it reversed immediately.",Fraud
-"Someone is using my identity to open accounts, this is fraud!",Fraud
-"Please unblock my internet banking, I am locked out.",Account Access
-Why did the ATM charge me R50 for a withdrawal?,Billing
-How do I get a new SIM card linked to my bank account?,Account Access
 I want to cancel my credit card.,General
-"A hacker just changed my banking password, help!",Fraud
-I see a transaction for Uber Eats that I did not make.,Fraud
-My card is declining but I have money in my account.,Billing
-I need to change my daily withdrawal limit.,Account Access
-How much does it cost to send money to another bank?,Billing
-I forgot my online banking username.,Account Access
+Do you have a branch near Sandton City?,General
+What documents do I need to open a new account?,General
+Can I apply for a personal loan online?,General
+What interest rate do you offer on fixed deposits?,General
+How do I make a complaint about the service at my branch?,General
+Are you open on public holidays?,General
+I would like to know more about your student accounts.,General
+What is the process to close my account?,General
+Do you offer business accounts for small companies?,General
+Can I get a pre-approval for a car loan?,General
+What are the requirements for a home loan?,General
+How long does it take to open a new account?,General
+Do you have a mobile app for Android and iPhone?,General
+I want to give feedback about your customer service.,General
+Can someone call me to explain your investment options?,General
+Where can I find your contact number for the head office?,General
+What is the minimum balance for a savings account?,General
+Can I add my spouse as a joint account holder?,General
+Do you offer a tax free savings account?,General
+What are your branch hours on Saturdays?,General
+How do I book an appointment with a financial advisor?,General
+I want to know about travel insurance with my card.,General
+Can I get a credit card if I am self employed?,General
+Is there a bank in Parys that can help me with a business account?,General
+What is the difference between a cheque and a savings account?,General
+I want to find out about your pensioner accounts.,General
+"Thank you for the help yesterday, the consultant was great.",General
+Can you tell me about your rewards programme?,General
+How do I become a customer?,General
+I want to enquire about a bond for my first home.,General
+What is the daily limit on cash deposits at your ATMs?,General
+Can I schedule a call back from a consultant?,General
+Do you have any home loan specials this month?,General
+Is there an ATM close to the Vaal University of Technology?,General
+Please send me a brochure on your credit cards.,General
+I would like to understand how a money market account works.,General
+"I did not make any of these purchases, my card details must have been stolen.",Fraud
+Someone withdrew money from my account and it wasn't me.,Fraud
+"I think I was scammed on Facebook Marketplace, I paid and the seller vanished.",Fraud
+"A stranger has my banking app login, please lock my account now.",Fraud
+I got a call from someone claiming to be from the fraud department asking for my OTP.,Fraud
+My card was used at a shop I have never been to.,Fraud
+There is a cash send I did not create on my account.,Fraud
+Somebody hacked my email and then my banking profile.,Fraud
+I noticed a R3500 transfer to an unknown beneficiary.,Fraud
+A fake courier SMS asked me to pay a fee and then money was taken from my card.,Fraud
+My bank card was swallowed and I think somebody used it afterwards.,Fraud
+"Please investigate, there are transactions on my account that look suspicious.",Fraud
+I never gave anyone permission to debit my account.,Fraud
+My account was emptied overnight and I did not do it.,Fraud
+"I am a victim of a SIM swap, my phone has no network and money is gone.",Fraud
+Someone created a new beneficiary on my profile without me knowing.,Fraud
+I received a payment request from a fake account using my name.,Fraud
+I want to report unauthorised access to my internet banking.,Fraud
+My card was declined at a shop and then I saw a withdrawal in another province.,Fraud
+I think a scammer got my ID number and bank account details.,Fraud
+"Please freeze my account, I lost my phone and my banking app is open.",Fraud
+"I was told I won a prize and had to pay a fee, now I realise it was a scam.",Fraud
+There was an ATM withdrawal at 2am and I was at home.,Fraud
+A romance scammer convinced me to send them money.,Fraud
+The bank SMS said a new device was added to my profile and it was not me.,Fraud
+I see a recurring subscription I never signed up for and I suspect my card was stolen.,Fraud
+"My business account has payments to suppliers we do not use, I think we were hacked.",Fraud
+Someone intercepted my payment and changed the banking details on an invoice.,Fraud
+I gave my card and PIN to a man who offered to help me at the ATM.,Fraud
+A pop-up on my phone said my bank was blocked and I entered my details.,Fraud
+"Somebody keeps trying to reset my banking password, I did not request it.",Fraud
+My child's account was accessed by a stranger and money was moved.,Fraud
+I received a fake refund SMS and now my card has strange charges.,Fraud
+I believe my card was cloned at the restaurant last night.,Fraud
+"I want to lay a fraud complaint, R12000 was taken from my savings.",Fraud
+The payment shows my name but I did not send it.,Fraud
+What is the fee for withdrawing cash at a till point?,Billing
+My account was debited for a bank charge I was not told about.,Billing
+I want to know why my statement shows a different balance to the app.,Billing
+Can you explain the difference between the fees on a gold and a platinum card?,Billing
+Please send me a certified copy of my statement for the last six months.,Billing
+I paid my account but the loan balance has not decreased.,Billing
+"I was charged a fee for a failed debit order, please refund it.",Billing
+Why does it cost R10 to check my balance at the ATM?,Billing
+How much do I pay for an overdraft facility?,Billing
+I need an interest certificate for my SARS submission.,Billing
+"My cheque account fees went up this month, why?",Billing
+I was debited twice for the same debit order.,Billing
+"The cash deposit I made is not reflecting, please check.",Billing
+Where can I see all the fees that apply to my savings account?,Billing
+I need a proof of residence letter from the bank.,Billing
+A merchant refund has not been paid back into my account after two weeks.,Billing
+My statement shows a charge for a service I did not use.,Billing
+I want a breakdown of the interest charged on my credit card.,Billing
+What are the charges for sending money abroad?,Billing
+Why am I paying a monthly fee on an account I rarely use?,Billing
+The ATM withdrew R1000 from my account but only gave me R500.,Billing
+I need a bank letter confirming my salary deposits.,Billing
+Please explain the administration fee on my loan.,Billing
+How do I get a refund after paying a fee in error?,Billing
+"The premium on my credit life insurance was increased, why?",Billing
+"I was charged a fee for using my card in another country, how much is it?",Billing
+Can I receive my statements by email instead of post and what does it cost?,Billing
+My loan statement does not match what I have paid.,Billing
+Why was a fee deducted when I transferred money to my own account?,Billing
+I need my account statement for the month of March.,Billing
+What is the monthly cost of keeping a student account?,Billing
+Why did my debit order bounce even though I had enough money?,Billing
+I paid my credit card but it still shows the amount as due.,Billing
+Please explain the interest on my home loan this month.,Billing
+The fee for the payment I made is higher than the quote I was given.,Billing
+I need a copy of the receipt for my last deposit.,Billing
+I cannot open my banking app after the latest update.,Account Access
+How do I change my login password on the website?,Account Access
+My card is blocked and I need to be able to use it again.,Account Access
+"Please help, I can't get past the OTP screen.",Account Access
+I want to remove an old phone from my banking profile.,Account Access
+How do I reset my online banking PIN?,Account Access
+"My account says it is dormant, how do I reactivate it?",Account Access
+"I need to reset my app, it keeps crashing when I log in.",Account Access
+I have a new number and my OTP is going to my old phone.,Account Access
+How can I register my new device for internet banking?,Account Access
+The system says my username is not recognised.,Account Access
+I would like to unlock my profile after too many failed login attempts.,Account Access
+How do I get my card pin if I forgot it?,Account Access
+"My face ID is not working on the banking app, how do I fix it?",Account Access
+I want to increase my transfer limit on the app.,Account Access
+How do I log in if I no longer have my old cellphone?,Account Access
+I can't see my savings account on the app.,Account Access
+Please help me change my email address for my banking profile.,Account Access
+"I need to unfreeze my card, I found it after losing it.",Account Access
+I get an error code when I try to sign in.,Account Access
+How do I link a second account to my profile?,Account Access
+My internet banking is locked and I have a payment to make today.,Account Access
+How do I turn my card off and on in the app?,Account Access
+"I need to re-register for the banking app, it says my device is not trusted.",Account Access
+How do I open my account for access while I am overseas?,Account Access
+My password expired and the reset link is not working.,Account Access
+"My new card is not working at the ATM, how do I activate it?",Account Access
+I cannot change my daily limit on the app.,Account Access
+I forgot my username and my password.,Account Access
+I'm not receiving the verification code to my phone.,Account Access
+How do I unblock my online banking profile?,Account Access
+The app says session expired every time I try to log in.,Account Access
+I want to give my accountant view only access to my account.,Account Access
+How do I update my ID details so I can use the app?,Account Access
+"Can you help me log in, the app does not accept my password?",Account Access
+How do I reset my profile on a new phone?,Account Access
+Which branch is the closest to Vanderbijlpark?,General
+What is the difference between a savings and a fixed deposit account?,General
+Do you offer a youth account for teenagers?,General
+How do I apply for a bursary or student loan?,General
+I am interested in opening a business account for my start up.,General
+Can I get a quote for a vehicle finance loan?,General
+What is the process to apply for a home loan?,General
+How do I contact the customer care centre?,General
+Do you have a branch in Johannesburg CBD?,General
+Which documents are required for a business loan?,General
+Do you have any promotions on savings accounts?,General
+What are your lowest interest rate home loans?,General
+I would like to arrange a meeting with a banker.,General
+Can I open an account if I am not a South African citizen?,General
+Do you offer foreign currency accounts?,General
+Where are your ATMs located in Vereeniging?,General
+What are the benefits of your premium banking package?,General
+Do you provide financial planning services?,General
+How can I give a compliment about one of your employees?,General
+What is your complaints procedure?,General
+I'd like to know about retirement annuities.,General
+Can I get a business credit card?,General
+What time does the call centre close on weekdays?,General
+Is there a bank branch at the shopping centre in Meyerton?,General
+I want to find out more about your savings plans for children.,General
+Can I invest in unit trusts through you?,General
+What services do you offer to pensioners?,General
+"I'd like to cancel my account, what must I do?",General
+How can I become a bank agent or merchant?,General
+What is the minimum amount to open a fixed deposit?,General
+Do you have a student account without monthly fees?,General
+Do you offer personal loans for people with no credit history?,General
+I would like to know about your savings interest rates for this year.,General
+"Thank you, my query was resolved quickly.",General
+Can you please tell me more about your insurance products?,General
+Do I need to visit a branch to open an account?,General
