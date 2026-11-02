@@ -1,73 +1,101 @@
-from pathlib import Path
+# app.py — Kwezi Finance FastAPI Backend
+# Run with:  python -m uvicorn app:app --reload
 
+import os
 import joblib
-import streamlit as st
+from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+from pydantic import BaseModel
 
-ROOT = Path(__file__).resolve().parent
-MODEL_PATH = ROOT / "nlp_triage_model.pkl"
-
-st.set_page_config(page_title="Kwezi Finance AI", page_icon="🏦", layout="centered")
-
-@st.cache_resource
-def load_model():
-    if not MODEL_PATH.exists():
-        return None
-    return joblib.load(MODEL_PATH)
-
-model = load_model()
-
-st.title("Kwezi Finance")
-st.caption("AI-assisted customer query triage · Student prototype")
-st.write("Classify a sample banking query and see the model's suggested priority and support queue.")
-st.info("Use sample text only. Do not enter real customer names, account numbers, card details, or other private information.")
-
-if model is None:
-    st.error("Model not found. Run python train.py from the project folder, then restart this app.")
-    st.stop()
-
-message = st.text_area(
-    "Customer message",
-    height=130,
-    max_chars=5000,
-    placeholder="Example: I see a transaction on my account that I did not make.",
+app = FastAPI(
+    title="Kwezi Finance AI Triage API",
+    description="NLP-based customer support & fraud triage system",
+    version="1.0.0",
 )
 
-if st.button("Analyse message", type="primary", use_container_width=True):
-    if not message.strip():
-        st.warning("Enter a message to classify.")
+# --- LOAD MODEL ON STARTUP ---
+MODEL_PATH = "nlp_triage_model.pkl"
+model = None
+
+if os.path.exists(MODEL_PATH):
+    model = joblib.load(MODEL_PATH)
+    print(f"✅ Model loaded from {MODEL_PATH}")
+    print(f"   Classes: {list(model.classes_)}")
+else:
+    print(f"⚠️  Model not found at {MODEL_PATH}. Run train.py first.")
+
+
+# --- REQUEST SCHEMA ---
+class Query(BaseModel):
+    text: str
+
+
+# --- SERVE THE FRONTEND AT "/" ---
+@app.get("/", response_class=HTMLResponse)
+async def serve_ui():
+    if not os.path.exists("index.html"):
+        return "<h1>index.html not found</h1><p>Place index.html in the same folder as app.py.</p>"
+    with open("index.html", "r", encoding="utf-8") as f:
+        return f.read()
+
+
+# --- HEALTH CHECK ---
+@app.get("/health")
+async def health():
+    return {"status": "ok", "model_loaded": model is not None}
+
+
+# --- CLASSIFY ENDPOINT ---
+@app.post("/classify")
+async def classify(query: Query):
+    if model is None:
+        return {"error": "Model not loaded. Please run train.py first."}
+
+    text = query.text.strip()
+    if not text:
+        return {"error": "Empty message."}
+
+    # 1. AI Prediction
+    prediction = model.predict([text])[0]
+    probabilities = model.predict_proba([text])[0]
+    confidence = float(max(probabilities) * 100)
+
+    # 2. Priority + softbot reply
+    if prediction == "Fraud":
+        priority = "HIGH 🔴"
+        priority_class = "HIGH"
+        reply = "🚨 We have identified this as a Fraud issue. A security agent is calling you now."
+    elif prediction == "Billing":
+        priority = "MEDIUM 🟡"
+        priority_class = "MEDIUM"
+        reply = "💳 I have routed this to our Billing Department. They will review your fees shortly."
+    elif prediction == "Account Access":
+        priority = "MEDIUM 🟡"
+        priority_class = "MEDIUM"
+        reply = "🔒 I have flagged this for our Account Security team to unlock your profile."
     else:
-        try:
-            predicted = str(model.predict([message.strip()])[0])
-            scores = model.predict_proba([message.strip()])[0]
-            confidence = float(max(scores)) * 100
-        except Exception:
-            st.error("The model could not classify this message.")
-            st.stop()
+        priority = "LOW 🟢"
+        priority_class = "LOW"
+        reply = "ℹ️ Thank you. A general consultant will respond to your query soon."
 
-        if confidence < 80.0:
-            priority = "HUMAN REVIEW"
-            queue = "Human Supervisor (recommended)"
-            reply = "This query needs review by a Kwezi Finance team member."
-        elif predicted == "Fraud":
-            priority, queue = "HIGH", "Security Team (recommended)"
-            reply = "This query has been flagged for urgent security review."
-        elif predicted == "Billing":
-            priority, queue = "MEDIUM", "Billing Team (recommended)"
-            reply = "This query has been classified for billing review."
-        elif predicted == "Account Access":
-            priority, queue = "MEDIUM", "Account Support (recommended)"
-            reply = "This query has been classified for account support."
-        else:
-            priority, queue = "LOW", "Customer Care (recommended)"
-            reply = "This query has been classified for customer care."
+    # 3. Confidence safety net (< 80% → human review, per documentation)
+    if confidence < 80.0:
+        priority = "HUMAN REVIEW ⚠️"
+        priority_class = "UNKNOWN"
+        reply = (
+            "Our AI is not entirely sure about this query. "
+            "It has been escalated to a human supervisor for review."
+        )
 
-        st.subheader("Triage result")
-        col1, col2, col3 = st.columns(3)
-        col1.metric("Category", predicted)
-        col2.metric("Priority", priority)
-        col3.metric("Model score", f"{confidence:.2f}%")
-        st.write(f"**Suggested queue:** {queue}")
-        st.success(reply)
-        st.caption("This is a recommendation only. The prototype does not create a ticket or contact a team.")
-        with st.expander("Technical details"):
-            st.write({str(label): f"{float(score) * 100:.2f}%" for label, score in zip(model.classes_, scores)})
+    # 4. Response (keys match what index.html expects)
+    return {
+        "ai_category": prediction,
+        "priority_level": priority,
+        "priority_class": priority_class,
+        "confidence_score": f"{confidence:.2f}%",
+        "softbot_reply": reply,
+        "raw_probabilities": {
+            cls: round(float(prob), 4)
+            for cls, prob in zip(model.classes_.tolist(), probabilities.tolist())
+        },
+    }
