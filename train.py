@@ -1,78 +1,110 @@
-# train.py — Trains and saves nlp_triage_model.pkl
-# Run once:  python train.py
+# train.py
+# Train the Kwezi Finance model using customer_queries.csv
 
-import pandas as pd                                    # ✅ correct
-from sklearn.model_selection import train_test_split   # ✅ correct
-from sklearn.feature_extraction.text import TfidfVectorizer  # ✅ correct
-from sklearn.naive_bayes import MultinomialNB          # ✅ correct
-from sklearn.pipeline import Pipeline                  # ✅ correct
-from sklearn.metrics import classification_report, accuracy_score  # ✅ correct
-import joblib                                          # ✅ correct
+from pathlib import Path
 
-print("--- 1. Generating Simulated Customer Messages ---")
+import joblib
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics import accuracy_score, classification_report
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.pipeline import Pipeline
 
-data = {
-    'Message': [
-        "I just got an SMS saying R5000 was withdrawn but I didn't do it!",
-        "Someone stole my bank card at the ATM, please block it.",
-        "There is a suspicious login attempt on my account from another country.",
-        "I lost my phone and my banking app is on it, I need to block my profile.",
-        "Why was I charged a monthly service fee? I thought my account was free.",
-        "I need a copy of my bank statement for the last 3 months for a loan application.",
-        "The ATM ate my card and didn't give me my money.",
-        "How do I update my cellphone number on the app?",
-        "I am trying to log in but it says my password is incorrect, please help.",
-        "My account is locked because I entered the wrong PIN too many times.",
-        "What are the trading hours for the branch in Vanderbijlpark?",
-        "Can I open a savings account for my child online?",
-        "I need to speak to a consultant about a home loan.",
-        "There is an unauthorized debit order on my account, I want it reversed immediately.",
-        "Someone is using my identity to open accounts, this is fraud!",
-        "Please unblock my internet banking, I am locked out.",
-        "Why did the ATM charge me R50 for a withdrawal?",
-        "How do I get a new SIM card linked to my bank account?",
-        "I want to cancel my credit card.",
-        "A hacker just changed my banking password, help!",
-        "I see a transaction for Uber Eats that I did not make.",
-        "My card is declining but I have money in my account.",
-        "I need to change my daily withdrawal limit.",
-        "How much does it cost to send money to another bank?",
-        "I forgot my online banking username."
-    ],
-    'Category': [
-        "Fraud", "Fraud", "Fraud", "Fraud",
-        "Billing", "Billing", "Billing",
-        "Account Access", "Account Access", "Account Access", "Account Access",
-        "General", "General",
-        "Fraud", "Fraud", "Account Access",
-        "Billing", "Account Access", "General", "Fraud",
-        "Fraud", "Billing", "Account Access", "Billing", "Account Access"
-    ]
+
+PROJECT_FOLDER = Path(__file__).resolve().parent
+CSV_PATH = PROJECT_FOLDER / "customer_queries.csv"
+MODEL_PATH = PROJECT_FOLDER / "nlp_triage_model.pkl"
+
+# Check that the CSV exists
+if not CSV_PATH.exists():
+    raise FileNotFoundError(
+        f"Could not find {CSV_PATH.name}. Put it in the same folder as train.py."
+    )
+
+# Read the data from the CSV
+df = pd.read_csv(CSV_PATH)
+
+# Match column names without depending on capitalization or extra spaces
+column_names = {column.strip().lower(): column for column in df.columns}
+
+if "message" not in column_names or "category" not in column_names:
+    raise ValueError(
+        "The CSV must have columns named Message and Category.\n"
+        f"Columns found: {list(df.columns)}"
+    )
+
+# Keep and clean the two columns the model needs
+df = df[[column_names["message"], column_names["category"]]].copy()
+df.columns = ["Message", "Category"]
+
+df = df.dropna(subset=["Message", "Category"])
+df["Message"] = df["Message"].astype(str).str.strip()
+df["Category"] = df["Category"].astype(str).str.strip()
+
+# Remove rows with a blank message or category
+df = df[(df["Message"] != "") & (df["Category"] != "")]
+
+if df.empty:
+    raise ValueError("The CSV has no usable message and category rows.")
+
+# Make category capitalization consistent with the API
+allowed_categories = {
+    "fraud": "Fraud",
+    "billing": "Billing",
+    "account access": "Account Access",
+    "general": "General",
 }
 
-df = pd.DataFrame(data)
-df.to_csv('customer_queries.csv', index=False)
-print(f"Dataset created with {len(df)} sample messages.")
+df["Category"] = df["Category"].str.lower().map(allowed_categories)
 
-print("\n--- 2. Training the NLP Model ---")
+if df["Category"].isna().any():
+    bad_categories = df.loc[df["Category"].isna(), "Category"].tolist()
+    raise ValueError(
+        "The CSV contains an unsupported category. Use Fraud, Billing, "
+        "Account Access, or General."
+    )
 
-X = df['Message']
-y = df['Category']
+# Show how many examples are available for each category
+print("Messages loaded:", len(df))
+print("\nExamples per category:")
+print(df["Category"].value_counts())
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# Stratified splitting requires at least two examples per category
+category_counts = df["Category"].value_counts()
+if len(category_counts) < 2 or category_counts.min() < 2:
+    raise ValueError(
+        "Add at least two labelled messages for every category before training."
+    )
 
-model_pipeline = Pipeline([
-    ('tfidf', TfidfVectorizer(stop_words='english')),
-    ('classifier', MultinomialNB())
+X = df["Message"]
+y = df["Category"]
+
+# Keep examples from each category in both the training and test sets
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=42,
+    stratify=y,
+)
+
+# Convert text into features, then train the classifier
+model = Pipeline([
+    ("tfidf", TfidfVectorizer(stop_words="english")),
+    ("classifier", MultinomialNB()),
 ])
 
-model_pipeline.fit(X_train, y_train)
+model.fit(X_train, y_train)
 
-print("\n--- 3. Model Evaluation ---")
-y_pred = model_pipeline.predict(X_test)
-print(f"Accuracy: {accuracy_score(y_test, y_pred) * 100:.2f}%")
-print("\nClassification Report:")
-print(classification_report(y_test, y_pred))
+# Evaluate on the held-out test examples
+predictions = model.predict(X_test)
 
-joblib.dump(model_pipeline, 'nlp_triage_model.pkl')
-print("\n✅ Success! Model saved as 'nlp_triage_model.pkl'")
+print("\nModel evaluation")
+print(f"Accuracy: {accuracy_score(y_test, predictions) * 100:.2f}%")
+print("\nClassification report:")
+print(classification_report(y_test, predictions, zero_division=0))
+
+# Save the trained model beside this script for app.py to load
+joblib.dump(model, MODEL_PATH)
+print(f"\nModel saved to: {MODEL_PATH}")
